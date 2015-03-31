@@ -1,0 +1,16 @@
+global
+    daemon
+    maxconn 256
+
+defaults
+    mode http
+    timeout connect 5000ms
+    timeout client 50000ms
+    timeout server 50000ms
+
+    stats enable
+    stats uri /?stats
+
+listen http-in
+    bind *:80{{range service "consul-http-router"}}
+    server {{.ID}} {{.Address}}:{{.Port}}{{end}}
