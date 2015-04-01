@@ -12,5 +12,5 @@ defaults
     stats uri /?stats
 
 listen http-in
-    bind *:80{{range service "consul-http-router"}}
-    server {{.ID}} {{.Address}}:{{.Port}}{{end}}
+    bind *:80{{range $index, $service := service "consul-http-router"}}
+    server s{{$index}} {{$service.Address}}:{{$service.Port}}{{end}}
